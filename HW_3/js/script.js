@@ -189,7 +189,9 @@ console.log(stringNumber.length + ' districts in a number')
 console.log('sum of districts: ' + districtSum)
 console.log('reverse number: ' + reverse)
  
-
+let ni = new Array(5);
+ni[Math.floor(ni.length/2)] = 8;
+console.log(n)
 
    
 
