@@ -1,4 +1,4 @@
-let Keller = function(name = 'Bosch', color = 'red') {
+let Kettle = function(name = 'Bosch', color = 'red') {
     this.name = name;
     this.color = color;
     this.turning = false; 
@@ -7,25 +7,25 @@ let Keller = function(name = 'Bosch', color = 'red') {
     this.waterTemp = 20;
 
     this.get = function() {
-        alert(` keller: ${this.name}, color: ${this.color}`);
-        this.volume = +prompt("Enter keller`s volume");
+        alert(` kettle: ${this.name}, color: ${this.color}`);
+        this.volume = +prompt("Enter kettle`s volume");
         this.amount = +prompt('Add water');
 
         if ((this.volume > 2000 || this.volume < 400) || (this.amount < 50 || this.amount >= this.volume)) {
             alert('wrong volume');
             this.get();
-        } else if (confirm('Do you want to turn on the keller?')) {
+        } else if (confirm('Do you want to turn on the kettle?')) {
             this.turnOn();
         }  
     };
 
     this.turnOn = function() {
         this.turning = true;
-        alert('Keller is turning on');
+        alert('Kettle is turning on');
 
         if (confirm('boil water?')) {
             this.boiling();
-        } else if (confirm('turn off the keller?')) {
+        } else if (confirm('turn off the kettle?')) {
             this.turnOff();
         }
     };
@@ -50,7 +50,7 @@ let Keller = function(name = 'Bosch', color = 'red') {
         }
 
         if (this.amount <= 100) {
-            alert('keller is empty. Add water!');
+            alert('kettle is empty. Add water!');
             this.addWater();
         }
     };
@@ -74,17 +74,17 @@ let Keller = function(name = 'Bosch', color = 'red') {
         this.boiling();
 
         if (this.amount >= this.volume) {
-            alert("Keller is full");
+            alert("Kettle is full");
             this.amount = this.volume;
         }  
     };
 
     this.turnOff = function() {
         this.turning = false;
-        alert('keller is turning off');
+        alert('kettle is turning off');
     };
 };
 
-let keller = new Keller('Bork', 'Black');
-keller.get();
+let kettle = new Kettle('Bork', 'Black');
+kettle.get();
 
