@@ -45,7 +45,6 @@ let openDoList = document.querySelector('.button');
         let del = document.createElement('span');
         del.classList.add('delete');
        
-        
         if (task.keyCode == 13 && task.target.value != '') {
             taskText.innerHTML = task.target.value;
             task.target.value = '';
@@ -69,9 +68,9 @@ let openDoList = document.querySelector('.button');
 
             change.addEventListener('keydown', function(task) {
                 if ( task.keyCode == 13) {
-                taskItem.replaceChild(taskText, change);
-                taskText.innerHTML = task.target.value;
-                task.target.value = '';
+                    taskItem.replaceChild(taskText, change);
+                    taskText.innerHTML = task.target.value;
+                    task.target.value = '';
                 }
             });
         });
