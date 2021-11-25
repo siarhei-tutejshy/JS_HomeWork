@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/filter.css">
+
+</head>
+<body>
+
+    <div class="gallery" id="gallery">
+        <ul class="gallery__thumbs thumbs">
+            <li><a href="images/wepik-20211024-195852.png"><img src="images/wepik-20211024-195852.png" alt=""></a></li>
+            <li><a href="images/wepik-20211024-20016.png"><img src="images/wepik-20211024-20016.png" alt=""></a></li>
+            <li><a href="images/wepik-20211024-20121.png"><img src="images/wepik-20211024-20121.png" alt=""></a></li>
+            <li><a href="images/wepik-20211024-20216.png"><img src="images/wepik-20211024-20216.png" alt=""></a></li>
+            <li><a href="images/wepik-20211024-20316.png"><img src="images/wepik-20211024-20316.png" alt=""></a></li>
+
+        </ul>
+        <div class="gallery__preview preview hide">
+            <button class="gallery__preview_close close"></button>
+        </div>
+    </div>
+
+    <div class="portfolio" id="portfolio">
+        <ul class="portfolio__filter filter">
+            <li data-filter="all" class="active">All works</li>
+            <li data-filter="sites">Web sites</li>
+            <li data-filter="design">Design</li>
+            <li data-filter="logo">Logos</li>
+        </ul>
+        <ul class="portfolio__list list">
+            <li data-filter="sites">
+                <h3>Lorem, ipsum dolor.</h3>
+                <img src="https://image.freepik.com/free-photo/web-page-design-user-interface-template-copy-space_53876-120721.jpg" alt="">
+            </li>
+            <li data-filter="logo">
+                <h3>Dolore, ad consequatur?</h3>
+                <img src="https://image.freepik.com/free-photo/3d-facebook-stand-logo-minimal-simple-design-template_509562-317.jpg" alt="">
+            </li>
+            <li data-filter="design">
+                <h3>Ut, provident quod!</h3>
+                <img src="https://img.freepik.com/free-photo/3d-render-board-with-lamp-background-for-ui-ux-web-social-media-and-design-elements_549761-5.jpg?size=338&ext=jpg" alt="">
+            </li>
+            <li data-filter="logo">
+                <h3>Minima, incidunt eius.</h3>
+                <img src="https://img.freepik.com/free-photo/3d-twitter-stand-logo-minimal-simple-design-template_509562-321.jpg?size=338&ext=jpg" alt="">
+            </li>
+            <li data-filter="sites">
+                <h3>Natus, officia corrupti!</h3>
+                <img src="https://image.freepik.com/free-photo/html-http-web-design-hompage-icon_53876-120700.jpg" alt="">
+            </li>
+            <li data-filter="design">
+                <h3>Cumque, ea accusamus?</h3>
+                <img src="https://img.freepik.com/free-photo/3d-render-simple-circle-modern-geometric-background-template-for-ui-ux-web-social-media-and-design_549761-2.jpg?size=338&ext=jpg" alt="">
+            </li>
+            <li data-filter="sites">
+                <h3>Doloremque, aliquid rem.</h3>
+                <img src="https://image.freepik.com/free-photo/adopt-animals-best-friends-icon_53876-133739.jpg" alt="">
+            </li>
+            <li data-filter="design">
+                <h3>Dignissimos, veniam vel.</h3>
+                <img src="https://image.freepik.com/free-photo/3d-render-rectangle-square-modern-geometric-background-for-ui-ux-web-social-media_549761-1.jpg" alt="">
+            </li>
+            <li data-filter="sites">
+                <h3>Sequi, blanditiis eligendi.</h3>
+                <img src="https://image.freepik.com/free-photo/sign-up-form-button-graphic-concept_53876-123684.jpg" alt="">
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/filter.js"></script>
+    <script src="js/gallery.js"></script>
+    
+</body>
+</html>
