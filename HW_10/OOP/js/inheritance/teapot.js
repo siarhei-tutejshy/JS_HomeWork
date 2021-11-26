@@ -27,5 +27,4 @@ Teapot.prototype = kettle;
 
 
 let teapot = new Teapot('bork');
-
-teapot.get();
+let teapot2 = new Teapot('ddd', 'black')
