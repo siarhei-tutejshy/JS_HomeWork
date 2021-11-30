@@ -1,0 +1,91 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    flex-direction: column-reverse;
+    border: 2px solid #f2f2f2;
+    width: 600px;
+    margin: 0 auto;
+}
+
+.head__contacts{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: rgb(58, 58, 245);
+    color: #ffffff;
+}
+
+.head__contacts .add{
+    width: 40px;
+    height: 40px;
+    
+    background: url(/plus.png) no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-color: rgba(255, 248, 220, 0.4);
+
+}
+.head__contacts h2{
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.form {
+   padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form > form{
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+}
+.form  input{
+    margin-bottom: 20px;
+    width: 50%;
+}
+.show {
+    background-color: rgb(163, 202, 253);
+    min-height: 50px;
+    max-height: 600px;
+    overflow: scroll;
+}
+.contact__item{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 2px solid #8d8b8b;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: rgb(77, 147, 238);
+}
+
+.contact__item__buttons{
+    display: flex;
+}
+.contact__item__buttons > div{
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    
+}
+.contact__item__buttons .edit{
+    background: url(/pen.png) no-repeat;
+    background-position: center;
+    background-size: 80%;
+}
+.contact__item__buttons .delete{
+    background: url(/delete-user.png) no-repeat;
+    background-position: center;
+    background-size: 80%;
+}
+.hidden{
+    display: none;
+}
