@@ -20,11 +20,9 @@ class User {
     }
 
     get() {
-        console.log(this.data);
         return this.data;
     }
 }
-
 
 
 class Contacts {
@@ -32,16 +30,14 @@ class Contacts {
     data = new Array();
 
     add(obj) {
-          let user = new User(obj);
-          this.data.push(user.get());
-
+        let user = new User(obj);
+        this.data.push(user);
     }
 
     edit(id, obj) {
         let editUser;
         this.data.forEach(item => {
-            if(item.data.id == id)
-            editUser = item;
+            if(item.data.id == id) editUser = item;
         })
 
         editUser.edit(obj);
@@ -82,19 +78,16 @@ class ContactsApp extends Contacts{
         </div>
 
         <div class="form hidden">
-            <form action="#" method = "GET">
+            <form action="#" >
            
                 <div class="field">Name<input  type="text" class="name" name="name"></div>
                 <div class="field">Phone<input type="tel" class="phone" name = "phone"></div>
                 <div class="field">Address<input type="text" class="address" name="address"></div>
                 <div class="field">Email<input type="email" class="email" name="email"></div>
-                <button class="submit added">submit</button>
+                <button class="submit added">add contact</button>
             </form>
         </div>
-        <div class="contacts"></div>
-
-        
-    `
+        <div class="contacts"></div>`;
     }
 
     onAdd() {
@@ -107,21 +100,19 @@ class ContactsApp extends Contacts{
         contact.email = document.querySelector('.email').value;
         contact.phone = document.querySelector('.phone').value;
 
-        // document.querySelector('.address').value = "";
-        // document.querySelector('.email').value = "";
-        // document.querySelector('.name').value = "";
-        // document.querySelector('.phone').value = "";
-        console.log(contact)
-        
+        document.querySelector('.address').value = "";
+        document.querySelector('.email').value = "";
+        document.querySelector('.name').value = "";
+        document.querySelector('.phone').value = "";
 
         super.add(contact);
-        this.get();
         this.id++;
     }
 
     onEdit() {
         let contact = event.target.closest("div .contact__item");
-        let form = document.querySelector('.edit__form')
+        let form = document.querySelector('.edit__form');
+
         let editedContact = {};
         let id = contact.dataset.id;
 
@@ -140,6 +131,17 @@ class ContactsApp extends Contacts{
 
         super.remove(id);
         this.get();
+    }
+
+    get() {
+        let contatsData = super.get();
+        
+        let contacts = document.querySelector('.contacts');
+        while(contacts.firstChild) {
+            contacts.removeChild(contacts.firstChild);
+        }
+
+        contatsData.forEach(item =>  this.showContacts(item));
     }
 
     showContacts(item) {
@@ -165,11 +167,10 @@ class ContactsApp extends Contacts{
         let deleteButton = document.createElement('div');
         deleteButton.classList.add('delete');
         
-        main.append(content)
+        main.append(content);
         buttons.append(editButton,deleteButton);
         contactItem.append(main,buttons);
 
-        id.innerHTML = `${item.data.id}`;
         content.innerHTML = ` <h2> Name: <span>${item.data.name}</span> </br>Phone: <span>${item.data.phone}</span> </h2> email: <span>${item.data.email}</span>;   address: <span>${item.data.address}</span> </br>`;
         
         document.querySelector('.contacts').prepend(contactItem);
@@ -182,10 +183,10 @@ class ContactsApp extends Contacts{
                     <input type="tel" class="phone" name = "phone" placeholder="PHONE: ${item.data.phone}">
                     <input type="text" class="address" name="address" placeholder="ADDRESS: ${item.data.address}">
                     <input type="email" class="email" name="email" placeholder="EMAIL: ${item.data.email}">
-                   
                     <button class="submit edited">edit contact</button>
                 </form>
             </div>`;
+
             editButton.addEventListener('click',() => this.get());
 
             let editConfirmButt = document.querySelector('.edited');
@@ -196,36 +197,23 @@ class ContactsApp extends Contacts{
             }); 
         });
 
-
-        deleteButton.addEventListener('click', (event) => {
-            this.onRemove();    
-        });
-    }
-
-    get() {
-        let contatsData = super.get();
-        let contacts = document.querySelector('.contacts');
-        
-        while(contacts.firstChild) {
-            contacts.removeChild(contacts.firstChild);
-        }
-
-        contatsData.forEach(item =>  this.showContacts(item));
+        deleteButton.addEventListener('click', (event) => this.onRemove());  
     }
     
     init() {
         
         let submitAddCont = document.querySelector('.added');
         let addContact = document.querySelector('.add');
-        let form = document.querySelector(".form")
+        let form = document.querySelector(".form");
        
         addContact.addEventListener('click', () => form.classList.toggle('hidden'));
             
-        submitAddCont.addEventListener('click', () => {
-            
-            this.onAdd();
-            this.get();
+        submitAddCont.addEventListener('click', (event) => {
+            event.preventDefault()
             form.classList.add('hidden');
+
+            this.onAdd();
+            this.get(); 
         });
     }
 }
@@ -235,11 +223,3 @@ let application = new ContactsApp();
 application.init();
 
 
-// let a = {
-//     id : 1,
-//     name : "asdaasadasddd",
-//     address :  "zzzzzasdadd",
-//     email :  "zzzzzzzasdadd",
-//     phone :  "zzzzzzzzasdadd",
-
-// }

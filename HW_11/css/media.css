@@ -1,0 +1,26 @@
+@media (max-width: 600px) {
+
+    .contact__item__main{
+        font-size: 16px;
+    }
+
+    .contact__item__main h2 span{
+        font-size: 20px;
+        font-weight: 400;
+    }
+    
+}
+
+@media (max-width: 426px) {
+
+    .contact__item{
+        flex-direction: column;
+    }
+
+    .contact__item__main{
+        width: 100%;
+    }
+    .contact__item__buttons{
+        justify-content: flex-end; 
+    }
+}
