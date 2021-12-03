@@ -199,7 +199,14 @@ class ContactsApp extends Contacts{
 
         deleteButton.addEventListener('click', (event) => this.onRemove());  
     }
-    
+
+    get storage(){
+
+    }
+
+     set storage() {
+
+    }
     init() {
         
         let submitAddCont = document.querySelector('.added');
