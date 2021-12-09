@@ -1,18 +1,16 @@
-
 class User {
-
     constructor(object) {
         this.data = {
-            id : object.id || 0,
-            name : object.name || "unknown",
-            address : object.address || "- -",
-            email : object.email || "- -",
-            phone : object.phone || "unknown"
-        } 
+            id: object.id || 0,
+            name: object.name || 'unknown',
+            address: object.address || '- -',
+            email: object.email || '- -',
+            phone: object.phone || 'unknown',
+        };
     }
 
     edit(obj) {
-        this.data.name = obj.name || this.data.name ;
+        this.data.name = obj.name || this.data.name;
         this.data.address = obj.address || this.data.address;
         this.data.email = obj.email || this.data.email;
         this.data.phone = obj.phone || this.data.phone;
@@ -24,9 +22,7 @@ class User {
     }
 }
 
-
 class Contacts {
-    
     data = new Array();
 
     add(obj) {
@@ -36,19 +32,19 @@ class Contacts {
 
     edit(id, obj) {
         let editUser;
-        this.data.forEach(item => {
-            if(item.data.id == id) editUser = item;
-        })
+        this.data.forEach((item) => {
+            if (item.data.id == id) editUser = item;
+        });
 
         editUser.edit(obj);
     }
 
     remove(id) {
-        this.data.forEach(item => {
-            if(item.data.id == id) {
+        this.data.forEach((item) => {
+            if (item.data.id == id) {
                 const index = this.data.indexOf(item);
                 this.data.splice(index, 1);
-            } 
+            }
         });
     }
 
@@ -57,18 +53,15 @@ class Contacts {
     }
 }
 
-
-
-class ContactsApp extends Contacts{
-   
+class ContactsApp extends Contacts {
     appEl = document.createElement('div');
-   
+
     constructor() {
         super();
 
         this.id = 1;
 
-        this.appEl.classList.add('container')
+        this.appEl.classList.add('container');
         document.querySelector('body').append(this.appEl);
 
         this.appEl.innerHTML = `
@@ -91,7 +84,6 @@ class ContactsApp extends Contacts{
     }
 
     onAdd() {
-
         let contact = {};
 
         contact.id = this.id;
@@ -100,17 +92,17 @@ class ContactsApp extends Contacts{
         contact.email = document.querySelector('.email').value;
         contact.phone = document.querySelector('.phone').value;
 
-        document.querySelector('.address').value = "";
-        document.querySelector('.email').value = "";
-        document.querySelector('.name').value = "";
-        document.querySelector('.phone').value = "";
+        document.querySelector('.address').value = '';
+        document.querySelector('.email').value = '';
+        document.querySelector('.name').value = '';
+        document.querySelector('.phone').value = '';
 
         super.add(contact);
         this.id++;
     }
 
     onEdit() {
-        let contact = event.target.closest("div .contact__item");
+        let contact = event.target.closest('div .contact__item');
         let form = document.querySelector('.edit__form');
 
         let editedContact = {};
@@ -122,26 +114,28 @@ class ContactsApp extends Contacts{
         editedContact.phone = form.querySelector('.phone').value;
 
         super.edit(id, editedContact);
-        this.get();
+        this.show();
     }
 
     onRemove() {
-        let contact = event.target.closest("div .contact__item");
+        let contact = event.target.closest('div .contact__item');
         let id = contact.dataset.id;
 
         super.remove(id);
-        this.get();
+        this.show();
     }
 
-    get() {
-        let contatsData = super.get();
-        
+    show() {
+        this.storage = this.get();
+
         let contacts = document.querySelector('.contacts');
-        while(contacts.firstChild) {
+
+        while (contacts.firstChild) {
             contacts.removeChild(contacts.firstChild);
         }
 
-        contatsData.forEach(item =>  this.showContacts(item));
+        if (!this.storage) return;
+        this.storage.forEach((item) => this.showContacts(item));
     }
 
     showContacts(item) {
@@ -149,10 +143,10 @@ class ContactsApp extends Contacts{
         contactItem.setAttribute('data-id', item.data.id);
         contactItem.classList.add('contact__item');
 
-        let main  = document.createElement('div');
+        let main = document.createElement('div');
         main.classList.add('contact__item__main');
 
-        let id  = document.createElement('div');
+        let id = document.createElement('div');
         id.classList.add('contact__item__id');
 
         let content = document.createElement('div');
@@ -160,19 +154,19 @@ class ContactsApp extends Contacts{
 
         let buttons = document.createElement('div');
         buttons.classList.add('contact__item__buttons');
-        
+
         let editButton = document.createElement('div');
         editButton.classList.add('edit');
 
         let deleteButton = document.createElement('div');
         deleteButton.classList.add('delete');
-        
+
         main.append(content);
-        buttons.append(editButton,deleteButton);
-        contactItem.append(main,buttons);
+        buttons.append(editButton, deleteButton);
+        contactItem.append(main, buttons);
 
         content.innerHTML = ` <h2> Name: <span>${item.data.name}</span> </br>Phone: <span>${item.data.phone}</span> </h2> email: <span>${item.data.email}</span>;   address: <span>${item.data.address}</span> </br>`;
-        
+
         document.querySelector('.contacts').prepend(contactItem);
 
         editButton.addEventListener('click', (event) => {
@@ -187,46 +181,62 @@ class ContactsApp extends Contacts{
                 </form>
             </div>`;
 
-            editButton.addEventListener('click',() => this.get());
+            editButton.addEventListener('click', () => this.get());
 
             let editConfirmButt = document.querySelector('.edited');
 
             editConfirmButt.addEventListener('click', (event) => {
                 this.onEdit();
-                this.get();
-            }); 
+                this.show();
+            });
         });
 
-        deleteButton.addEventListener('click', (event) => this.onRemove());  
+        deleteButton.addEventListener('click', (event) => this.onRemove());
     }
 
-    get storage(){
-
+    get storage() {
+        return JSON.parse(localStorage.getItem('contactsData'));
     }
 
-     set storage() {
+    set storage(contactsData) {
+        let date = new Date(Date.now() + 10*24*60*60*1000);
+        date = date.toUTCString();
 
+        localStorage.setItem('contactsData', JSON.stringify(contactsData));
+        localStorage.setItem('expires', JSON.stringify(date));
+
+        document.cookie = 'storageExperise=1; expires=' + date;
     }
+
     init() {
-        
         let submitAddCont = document.querySelector('.added');
         let addContact = document.querySelector('.add');
-        let form = document.querySelector(".form");
-       
-        addContact.addEventListener('click', () => form.classList.toggle('hidden'));
-            
+        let form = document.querySelector('.form');
+
+        addContact.addEventListener('click', () =>
+            form.classList.toggle('hidden')
+        );
+
         submitAddCont.addEventListener('click', (event) => {
-            event.preventDefault()
+            event.preventDefault();
             form.classList.add('hidden');
 
             this.onAdd();
-            this.get(); 
+            this.show();
         });
+
+        let date = Date.now();
+        let expiresDate = Date.parse(
+            JSON.parse(localStorage.getItem('expires'))
+        );
+        if (date >= expiresDate) localStorage.clear();
+
+        if (this.storage) {
+            this.storage.forEach((item) => this.showContacts(item));
+            this.data = this.storage;
+        }
     }
 }
 
-
 let application = new ContactsApp();
 application.init();
-
-
