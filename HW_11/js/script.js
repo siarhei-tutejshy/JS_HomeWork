@@ -24,9 +24,13 @@ class User {
 
 class Contacts {
     data = new Array();
+    constructor() {
+        this.id = 1;
+    }
 
     add(obj) {
         let user = new User(obj);
+        user.data.id = this.id++;
         this.data.push(user);
     }
 
@@ -59,8 +63,6 @@ class ContactsApp extends Contacts {
     constructor() {
         super();
 
-        this.id = 1;
-
         this.appEl.classList.add('container');
         document.querySelector('body').append(this.appEl);
 
@@ -81,12 +83,24 @@ class ContactsApp extends Contacts {
             </form>
         </div>
         <div class="contacts"></div>`;
+
+        if (!this.storage || this.storage.length == 0) {
+            this.getData().then((arr) => {
+                arr.forEach((item) => {
+                    this.add(item);
+                    console.log(item);
+                });
+                console.log(this.data);
+                this.show();
+            });
+        }
+
+        this.init();
     }
 
     onAdd() {
         let contact = {};
 
-        contact.id = this.id;
         contact.name = document.querySelector('.name').value;
         contact.address = document.querySelector('.address').value;
         contact.email = document.querySelector('.email').value;
@@ -98,7 +112,6 @@ class ContactsApp extends Contacts {
         document.querySelector('.phone').value = '';
 
         super.add(contact);
-        this.id++;
     }
 
     onEdit() {
@@ -126,7 +139,9 @@ class ContactsApp extends Contacts {
     }
 
     show() {
-        this.storage = this.get();
+        let data = this.get();
+
+        this.storage = data;
 
         let contacts = document.querySelector('.contacts');
 
@@ -134,8 +149,7 @@ class ContactsApp extends Contacts {
             contacts.removeChild(contacts.firstChild);
         }
 
-        if (!this.storage) return;
-        this.storage.forEach((item) => this.showContacts(item));
+        data.forEach((item) => this.showContacts(item));
     }
 
     showContacts(item) {
@@ -199,7 +213,7 @@ class ContactsApp extends Contacts {
     }
 
     set storage(contactsData) {
-        let date = new Date(Date.now() + 10*24*60*60*1000);
+        let date = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000);
         date = date.toUTCString();
 
         localStorage.setItem('contactsData', JSON.stringify(contactsData));
@@ -208,7 +222,28 @@ class ContactsApp extends Contacts {
         document.cookie = 'storageExperise=1; expires=' + date;
     }
 
+    async getData() {
+        let response = await fetch(
+            'https://jsonplaceholder.typicode.com/users'
+        );
+        let data = await response.json();
+        let newData = data.map((item) => {
+            return {
+                name: item.name,
+                phone: item.phone,
+                email: item.email,
+                address:
+                    item.address.city +
+                    item.address.street +
+                    item.address.suite,
+            };
+        });
+
+        return newData;
+    }
+
     init() {
+        
         let submitAddCont = document.querySelector('.added');
         let addContact = document.querySelector('.add');
         let form = document.querySelector('.form');
@@ -225,18 +260,21 @@ class ContactsApp extends Contacts {
             this.show();
         });
 
+        if (this.storage.length > 0) {
+            this.storage.forEach((user) => {
+                this.add(user.data);
+            });
+        }
+
         let date = Date.now();
         let expiresDate = Date.parse(
             JSON.parse(localStorage.getItem('expires'))
         );
+
         if (date >= expiresDate) localStorage.clear();
 
-        if (this.storage) {
-            this.storage.forEach((item) => this.showContacts(item));
-            this.data = this.storage;
-        }
+        this.show();
     }
 }
 
 let application = new ContactsApp();
-application.init();
