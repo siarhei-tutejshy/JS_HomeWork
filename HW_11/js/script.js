@@ -88,9 +88,7 @@ class ContactsApp extends Contacts {
             this.getData().then((arr) => {
                 arr.forEach((item) => {
                     this.add(item);
-                    console.log(item);
                 });
-                console.log(this.data);
                 this.show();
             });
         }
@@ -238,12 +236,10 @@ class ContactsApp extends Contacts {
                     item.address.suite,
             };
         });
-
         return newData;
     }
 
     init() {
-        
         let submitAddCont = document.querySelector('.added');
         let addContact = document.querySelector('.add');
         let form = document.querySelector('.form');
