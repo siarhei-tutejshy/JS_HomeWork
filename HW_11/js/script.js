@@ -58,31 +58,9 @@ class Contacts {
 }
 
 class ContactsApp extends Contacts {
-    appEl = document.createElement('div');
-
     constructor() {
         super();
-
-        this.appEl.classList.add('container');
-        document.querySelector('body').append(this.appEl);
-
-        this.appEl.innerHTML = `
-        <div class="head__contacts">
-            <h2>Contacts</h2>
-            <div class="add"></div>
-        </div>
-
-        <div class="form hidden">
-            <form action="#" >
-           
-                <div class="field">Name<input  type="text" class="name" name="name"></div>
-                <div class="field">Phone<input type="tel" class="phone" name = "phone"></div>
-                <div class="field">Address<input type="text" class="address" name="address"></div>
-                <div class="field">Email<input type="email" class="email" name="email"></div>
-                <button class="submit added">add contact</button>
-            </form>
-        </div>
-        <div class="contacts"></div>`;
+        
 
         if (!this.storage || this.storage.length == 0) {
             this.getData().then((arr) => {
@@ -92,8 +70,8 @@ class ContactsApp extends Contacts {
                 this.show();
             });
         }
-
         this.init();
+        
     }
 
     onAdd() {
@@ -240,6 +218,29 @@ class ContactsApp extends Contacts {
     }
 
     init() {
+
+        this.appEl = document.createElement('div');
+        this.appEl.classList.add('container');
+        document.querySelector('body').append(this.appEl);
+
+        this.appEl.innerHTML = `
+        <div class="head__contacts">
+            <h2>Contacts</h2>
+            <div class="add"></div>
+        </div>
+
+        <div class="form hidden">
+            <form action="#" >
+           
+                <div class="field">Name<input  type="text" class="name" name="name"></div>
+                <div class="field">Phone<input type="tel" class="phone" name = "phone"></div>
+                <div class="field">Address<input type="text" class="address" name="address"></div>
+                <div class="field">Email<input type="email" class="email" name="email"></div>
+                <button class="submit added">add contact</button>
+            </form>
+        </div>
+        <div class="contacts"></div>`;
+
         let submitAddCont = document.querySelector('.added');
         let addContact = document.querySelector('.add');
         let form = document.querySelector('.form');
